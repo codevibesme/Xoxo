@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-gradient{
+    @apply bg-gradient-to-r from-red-500 to-yellow-500 text-center text-transparent bg-clip-text font-bold
+}

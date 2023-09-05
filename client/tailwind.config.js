@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'home': "url('../public/assets/loader.gif')",
+        'confetti': "url('../public/assets/confetti.gif')",
       }
     },
   },

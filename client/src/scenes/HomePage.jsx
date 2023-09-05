@@ -35,8 +35,8 @@ const HomePage = () => {
     }
 
     return (
-        <div className="w-full h-full">
-            <h1 className="text-8xl bg-gradient-to-r from-red-500 to-yellow-500 text-center text-transparent bg-clip-text font-bold">XOXO RIVALS</h1>
+        <div className=" max-w-full max-h-full">
+            <h1 className="text-5xl md:text-8xl bg-gradient-to-r from-red-500 to-yellow-500 text-center text-transparent bg-clip-text font-bold w-fit mx-auto">XOXO RIVALS</h1>
             <div className="h-full w-full relative flex justify-center">
                 <div className={`h-full w-full flex flex-col p-8 ${popUp? "blur-sm": ""}`}>
                     <img src="/assets/home.jpg" alt="banner" className="h-72 w-80 mx-auto mb-8"/>
