@@ -35,7 +35,7 @@ const HomePage = () => {
     }
 
     return (
-        <div className=" max-w-full max-h-full">
+        <div className=" w-full h-full">
             <h1 className="text-5xl md:text-8xl bg-gradient-to-r from-red-500 to-yellow-500 text-center text-transparent bg-clip-text font-bold w-fit mx-auto">XOXO RIVALS</h1>
             <div className="h-full w-full relative flex justify-center">
                 <div className={`h-full w-full flex flex-col p-8 ${popUp? "blur-sm": ""}`}>
@@ -44,7 +44,7 @@ const HomePage = () => {
                     <button ref={joinRef} className="w-1/3 h-12 rounded-lg bg-red-400 text-yellow-200 hover:scale-105 hover:shadow-md hover:shadow-red-200 mb-8 mx-auto" onClick={openRoomModal}>Join a Room</button>
                 </div>
                 {popUp && (
-                    <div className="absolute w-1/3 min-h-fit top-10 bg-white" ref={modalRef}>
+                    <div className="absolute w-4/5 md:w-1/3 min-h-fit top-10 bg-white mx-auto" ref={modalRef}>
                         <RoomModal action={action}/>
                     </div>
                 )}
