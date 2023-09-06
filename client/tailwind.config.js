@@ -11,6 +11,9 @@ module.exports = {
       rotate: {
         '270': '270deg',
         '360': '360deg',
+      },
+      stroke: {
+        '6': '6px'
       }
     },
   },

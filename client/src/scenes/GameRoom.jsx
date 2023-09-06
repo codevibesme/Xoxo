@@ -12,6 +12,8 @@ const GameRoom = () => {
     const [myTurn, setMyTurn] = useState(id===1? 1: 0);
     const boardRef = useRef(null);
   
+    const [result, setResult]=useState(null);
+
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -76,6 +78,12 @@ const GameRoom = () => {
         if(id === 1) dispatch(setOpponent({opponent: data.p2}));
         else dispatch(setOpponent({opponent: data.p1}));
     });
+
+    socket.on("result", (data) => {
+        setResult(data);
+        setMyTurn(0);
+    })
+
     socket.on("enemy_move", (data) => {
         const { i, p } = data;
         
@@ -109,11 +117,32 @@ const GameRoom = () => {
 
     return (
         <div className="flex flex-col w-full h-full justify-center">
-            <div className="flex mx-auto w-fit mb-6">
-                {isFull ? (<h1 className="text-2xl lg:text-6xl text-gradient">{myTurn===1?"Your":opponent+"'s"} turn</h1>): (<h1 className="text-xl-lg:text-2xl text-gradient">Waiting for Second Player...</h1>)}
-            </div>
+            {!result && (<div className="flex mx-auto w-fit mb-6">
+                {isFull ? (<h1 className="text-2xl lg:text-6xl text-gradient">{myTurn===1?"Your":opponent+"'s"} turn</h1>): (<h1 className="text-2xl-lg:text-4xl text-gradient">Waiting for Second Player...</h1>)}
+            </div>)}
+            {result && (<div className="flex mx-auto w-fit mb-6">
+                <h1 className="text-2xl lg-text-6xl text-gradient">
+                    {result.status==="Draw!" && result.status}
+                    {(result.status!=="Draw!" && result.id === id) ? <h1>You Won!</h1>: <h1>{opponent} Won!</h1>}
+                </h1>
+            </div>)}
             <div ref={boardRef} className="relative w-[18rem] md:w-[28rem] min-h-fit mx-auto mb-6">  
-                <div className="relative grid grid-cols-3 w-full min-h-fit">
+                <div className="grid grid-cols-3 w-full min-h-fit">
+                    {/* <svg className="absolute w-full h-full left-[3.33rem] md:left-[4.67rem]">
+                        <line x1="0" y1="0" x2="0" y2="100%" className=" stroke-red-600 stroke-[7px]" />
+                    </svg>
+
+                    <svg className="absolute w-full h-full top-[2.5rem] md:top-[3.5rem]  ">
+                        <line x1="0" y1="0" x2="100%" y2="0" className=" stroke-red-600 stroke-[7px]" />
+                    </svg>
+                    
+                    <svg className="absolute w-full h-full ">
+                        <line x1="0" y1="0" x2="100%" y2="100%" className=" stroke-red-600 stroke-[3px]" />
+                    </svg>
+
+                    <svg className="absolute w-full h-full ">
+                        <line x1="0" y1="100%" x2="100%" y2="0" className=" stroke-red-600 stroke-[3px]" />
+                    </svg> */}
                     {boxes.map(box => (
                         <div onClick={()=> {makeMove(box)}} key={box.i} className={`border-black border-2 h-20 md:h-28 ${box.css} flex flex-col justify-center text-center text-4xl md:text-6xl hover:bg-rose-100`}>
                             {box.v==='O' &&  (<span className=" text-green-600">{box.v}</span>) }

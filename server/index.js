@@ -15,33 +15,41 @@ const winningLogic = (data) => {
     //row-wise
     if(board[0].v === x && board[1].v === x && board[2].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, r: 0});
     }
     if(board[3].v === x && board[4].v === x && board[5].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, r:1});
     }
     if(board[6].v === x && board[7].v === x && board[8].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, r:2});
     }
 
     //Column wise
     if(board[0].v === x && board[3].v === x && board[6].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, c:0});
     }
     if(board[1].v === x && board[4].v === x && board[7].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, c:1});
     }
     if(board[2].v === x && board[5].v === x && board[8].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, c:2});
     }
 
     //right diagonal
     if(board[0].v === x && board[4].v === x && board[8].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, rd:1});
     }
 
     //left diagonal
     if(board[2].v === x && board[4].v === x && board[6].v === x){
         console.log(`player ${data.p} won`);
+        io.to(data.room).emit("result", {status:"Won", id: data.p, ld:1});
     }
     // let c=0;
     // check for draw
@@ -49,7 +57,10 @@ const winningLogic = (data) => {
     let c=0;
     for(let k=0; k<board.length; k++)
         if(board[k].v===0 || board[k].v===1) c++;
-    if(c===9) console.log("draw");
+    if(c===9){
+        console.log("draw");
+        io.to(data.room).emit("result", {status:"Draw!", id: data.p});
+    }
 }
 
 const io = new Server(httpServer, {
@@ -74,7 +85,7 @@ io.on('connection', (socket) => {
             console.log(games[data.room]);
         }
         socket.join(data.room);
-        socket.emit("success", {room: data.room});
+        io.to(data.room).emit("success", {room: data.room});
         // all users in room use io.to
         // all other users except sender use socket.to
         if(games[data.room]?.count===2) io.to(data.room).emit("begin", {p1: games[data.room].p1, p2:games[data.room].p2, full: 1});
