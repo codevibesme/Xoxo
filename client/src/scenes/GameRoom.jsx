@@ -108,6 +108,7 @@ const GameRoom = () => {
         setBoxes([...newBoard]);
         setMyTurn(1);
     })
+    
     const makeMove = (box) => {
         if(box.v !== '') return;
         if(id === 1)
