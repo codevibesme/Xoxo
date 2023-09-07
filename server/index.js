@@ -4,11 +4,12 @@ import { createServer } from "http";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
+
+dotenv.config();
 const app = express();
+const httpServer = createServer(app);
 app.use(cors());
 app.use(helmet({crossOriginResourcePolicy:false,}))
-const httpServer = createServer(app);
-dotenv.config();
 let games = {};
 const winningLogic = (data) => {
     games[data.room].board[data.i].v=data.v;
@@ -69,7 +70,7 @@ const winningLogic = (data) => {
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "https://xoxo-tictac.netlify.app/",
+        origin: "https://xoxo-tictac.netlify.app",
         methods:["GET", "POST"]
     }
 });
