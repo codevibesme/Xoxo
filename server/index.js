@@ -69,7 +69,7 @@ const winningLogic = (data) => {
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "https://xoxo-tictac.netlify.app/",
+        origin: "https://main--xoxo-tictac.netlify.app//",
         methods:["GET", "POST"]
     }
 });
