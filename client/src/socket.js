@@ -1,4 +1,4 @@
 import io from "socket.io-client";
 
-const socket = io.connect("https://xoxo-ewkn.onrender.com");
+const socket = io.connect("https://xoxo-tqeu.onrender.com");
 export default socket;
