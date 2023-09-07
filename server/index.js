@@ -2,11 +2,12 @@ import express from "express";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import dotenv from "dotenv";
+import cors from "cors";
 const app = express();
 const httpServer = createServer(app);
 dotenv.config();
 let games = {};
-
+app.use(cors());
 const winningLogic = (data) => {
     games[data.room].board[data.i].v=data.v;
     games[data.room].board[data.i].p=data.p;
