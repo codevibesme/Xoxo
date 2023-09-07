@@ -1,9 +1,10 @@
 import express from "express";
 import { Server } from "socket.io";
 import { createServer } from "http";
+import {dotenv} from "dotenv";
 const app = express();
 const httpServer = createServer(app);
-
+dotenv.config();
 let games = {};
 
 const winningLogic = (data) => {
@@ -101,6 +102,6 @@ io.on('connection', (socket) => {
 
     socket.on("disconnect", ()=>{console.log("user disconnected");});
 });
-httpServer.listen(8000, () => console.log("Server running..."));
+httpServer.listen(process.env.PORT, () => console.log("Server running..."));
 
 
