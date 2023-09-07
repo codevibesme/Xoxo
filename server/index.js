@@ -3,11 +3,13 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import dotenv from "dotenv";
 import cors from "cors";
+import helmet from "helmet";
 const app = express();
+app.use(cors());
+app.use(helmet({crossOriginResourcePolicy:false,}))
 const httpServer = createServer(app);
 dotenv.config();
 let games = {};
-app.use(cors());
 const winningLogic = (data) => {
     games[data.room].board[data.i].v=data.v;
     games[data.room].board[data.i].p=data.p;
