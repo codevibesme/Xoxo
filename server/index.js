@@ -65,7 +65,7 @@ const winningLogic = (data) => {
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://xoxo-tictac.netlify.app/",
         methods:["GET", "POST"]
     }
 });
