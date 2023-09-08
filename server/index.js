@@ -19,41 +19,33 @@ const winningLogic = (data) => {
     
     //row-wise
     if(board[0].v === x && board[1].v === x && board[2].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:1, r1:0, r2:0, c0:0, c1:0, c2:0, rd:0, ld:0});
     }
     if(board[3].v === x && board[4].v === x && board[5].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:1, r2:0, c0:0, c1:0, c2:0, rd:0, ld:0});
     }
     if(board[6].v === x && board[7].v === x && board[8].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:0, r2:1, c0:0, c1:0, c2:0, rd:0, ld:0});
     }
 
     //Column wise
     if(board[0].v === x && board[3].v === x && board[6].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:0, r2:0, c0:1, c1:0, c2:0, rd:0, ld:0});
     }
     if(board[1].v === x && board[4].v === x && board[7].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:0, r2:0, c0:0, c1:1, c2:0, rd:0, ld:0});
     }
     if(board[2].v === x && board[5].v === x && board[8].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:0, r2:0, c0:0, c1:0, c2:1, rd:0, ld:0});
     }
 
     //right diagonal
     if(board[0].v === x && board[4].v === x && board[8].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:0, r2:0, c0:0, c1:0, c2:0, rd:1, ld:0});
     }
 
     //left diagonal
     if(board[2].v === x && board[4].v === x && board[6].v === x){
-        console.log(`player ${data.p} won`);
         io.to(data.room).emit("result", {status:"Won", id: data.p, r0:0, r1:0, r2:0, c0:0, c1:0, c2:0, rd:0, ld:0});
     }
     // let c=0;
@@ -63,7 +55,6 @@ const winningLogic = (data) => {
     for(let k=0; k<board.length; k++)
         if(board[k].v===0 || board[k].v===1) c++;
     if(c===9){
-        console.log("draw");
         io.to(data.room).emit("result", {status:"Draw!", id: data.p});
     }
 }
@@ -77,7 +68,6 @@ const io = new Server(httpServer, {
 
 io.on('connection', (socket) => {
     socket.on("join_room", (data) => {
-        console.log(data);
         if(games[data.room]?.count === 2){
             socket.emit("full", {full: 1});
             return;
@@ -87,7 +77,6 @@ io.on('connection', (socket) => {
         else{
             games[data.room]["p2"]=data.name;
             games[data.room] = {...games[data.room], count: games[data.room].count+1, p2: data.name, board: [{i:"0", p:"", v:""}, {i:"1", p:"", v:""}, {i:"2", p:"", v:""}, {i:"3", p:"", v:""}, {i:"4", p:"", v:""}, {i:"5", p:"", v:""}, {i:"6", p:"", v:""}, {i:"7", p:"", v:""}, {i:"8", p:"", v:""}]};
-            console.log(games[data.room]);
         }
         socket.join(data.room);
         io.to(data.room).emit("success", {room: data.room});
@@ -98,8 +87,6 @@ io.on('connection', (socket) => {
 
     socket.on("move", (data) => {
         const {room, i, p, v} = data;
-        console.log(room, i, p, v);
-        console.log(typeof(room));
         socket.to(data.room).emit("enemy_move", ({i, p}));
         winningLogic(data);
     });
