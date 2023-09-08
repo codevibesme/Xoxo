@@ -55,7 +55,7 @@ const winningLogic = (data) => {
     for(let k=0; k<board.length; k++)
         if(board[k].v===0 || board[k].v===1) c++;
     if(c===9){
-        io.to(data.room).emit("result", {status:"Draw!", id: data.p});
+        io.to(data.room).emit("result", {status:"Draw!", id: 3});
     }
 }
 
@@ -94,5 +94,3 @@ io.on('connection', (socket) => {
     socket.on("disconnect", ()=>{console.log("user disconnected");});
 });
 httpServer.listen(process.env.PORT, () => console.log("Server running..."));
-
-

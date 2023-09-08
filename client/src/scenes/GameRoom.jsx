@@ -6,7 +6,6 @@ import { setOpponent } from "../slices/playerSlice";
 const GameRoom = () => {
     
     const [isFull, setIsFull] = useState(0);
-    const name = useSelector((state) => state.name);
     const id = useSelector((state) => state.id);
     const room = useSelector((state) => state.room);
     const opponent = useSelector((state) => state.opponent);
@@ -19,7 +18,6 @@ const GameRoom = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        // console.log(name, id, room);
         if(boardRef?.current){
             if(myTurn === 0)
                 boardRef.current.style.pointerEvents='none';
@@ -75,7 +73,6 @@ const GameRoom = () => {
     ]);
     
     socket.on("begin", (data) => {
-        console.log("begin")
         setIsFull(data.full);
        
         if(id === 1) dispatch(setOpponent({opponent: data.p2}));
