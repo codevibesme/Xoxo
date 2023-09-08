@@ -10,7 +10,7 @@ const GameRoom = () => {
     const id = useSelector((state) => state.id);
     const room = useSelector((state) => state.room);
     const opponent = useSelector((state) => state.opponent);
-    const [myTurn, setMyTurn] = useState(id===1? 1: 0);
+    const [myTurn, setMyTurn] = useState(0);
     const boardRef = useRef(null);
   
     const [result, setResult]=useState(null);
@@ -77,8 +77,13 @@ const GameRoom = () => {
     socket.on("begin", (data) => {
         console.log("begin")
         setIsFull(data.full);
+       
         if(id === 1) dispatch(setOpponent({opponent: data.p2}));
         else dispatch(setOpponent({opponent: data.p1}));
+
+        if(id === 1){
+            setMyTurn(1);
+        } else setMyTurn(0);
     });
 
     socket.on("result", (data) => {
